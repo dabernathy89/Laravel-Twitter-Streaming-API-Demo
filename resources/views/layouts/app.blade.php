@@ -23,6 +23,13 @@
         .fa-btn {
             margin-right: 6px;
         }
+
+        .tweet {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body id="app-layout">
