@@ -12,7 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        $tweets = App\Tweet::orderBy('created_at','desc')->paginate(5);
+    } else {
+        $tweets = App\Tweet::where('approved',1)->orderBy('created_at','desc')->take(5)->get();
+    }
+
+    return view('welcome', ['tweets' => $tweets]);
 });
 
 Route::auth();
