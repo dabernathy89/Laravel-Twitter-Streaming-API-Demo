@@ -21,6 +21,20 @@ Route::get('/', function () {
     return view('welcome', ['tweets' => $tweets]);
 });
 
+Route::post('approve-tweets', ['middleware' => 'auth', function (Illuminate\Http\Request $request) {
+    foreach ($request->all() as $input_key => $input_val) {
+        if ( strpos($input_key, 'approval-status-') === 0 ) {
+            $tweet_id = substr_replace($input_key, '', 0, strlen('approval-status-'));
+            $tweet = App\Tweet::where('id',$tweet_id)->first();
+            if ($tweet) {
+                $tweet->approved = (int)$input_val;
+                $tweet->save();
+            }
+        }
+    }
+    return redirect()->back();
+}]);
+
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
